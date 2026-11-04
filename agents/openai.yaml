@@ -1,4 +1,4 @@
 interface:
   display_name: "UI 去 AI 味"
-  short_description: "识别并修正页面里冗余说明、装饰套卡与无目的动效，保留真实业务关系"
-  default_prompt: "使用 $carl-ui-humanizer 检查这个页面，按真实任务减少模板感，并保留必要标签、帮助和交互。"
+  short_description: "结合原帖提示语与风格参考，改善界面模板感、排版配色与动效，保留业务和可用性"
+  default_prompt: "使用 $carl-ui-humanizer 检查这个页面，结合参考改善模板感与视觉风格，并验证核心交互。"

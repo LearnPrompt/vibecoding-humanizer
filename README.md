@@ -1,6 +1,6 @@
 # Carl UI Humanizer
 
-把界面里的重复解释、无关系的套框和无目的装饰，改成围绕真实任务的表达。
+面向两类任务：减少界面模板感，以及通过字体、构图、配色、材质、动效与参考转译提升审美。不是把所有页面改成极简，也不把加特效等同于好设计。
 
 结构参照 [blader/humanizer](https://github.com/blader/humanizer)：工作方式、按类编号的识别条目、修改前后示例、保留条件和输出模式。UI内容重新整理自本次材料；不是原仓库的中文翻译，也不使用它的验证数据。
 
@@ -16,17 +16,25 @@
 
 ```text
 carl-ui-humanizer/
-├── SKILL.md
+├── SKILL.md                     # 两种入口、八维设计流程与13条诊断
 ├── README.md
+├── VALIDATION.md
 ├── agents/openai.yaml
 ├── references/
-│   ├── english-originals-zh.md
-│   ├── original-materials.md
+│   ├── prompt-library.md        # 14条可直接使用的编辑提示语
+│   ├── aesthetic-reference.md   # 风格/动效原词与中文、参考选择
+│   ├── english-originals-zh.md  # 原有英文原句与中文对应
+│   ├── anthropic-prompts-en-zh.md # MIT官方前端审美完整英中提示
+│   ├── expanded-sources.md      # 新增原句、原文入口与中文摘要
+│   ├── source-coverage.md       # 来源核读范围及未完成部分
+│   ├── original-materials.md    # 原始来源与编辑边界
 │   └── code-animation.md
 └── assets/source-luinlee.png
 ```
 
-主入口含13种模式，每条都有识别信号、问题、前后例子、保留条件与来源编号。编号是阅读顺序，不是风险分数或固定改动顺序。
+主入口先区分“去味”和“审美提升”。保留13条诊断，新增八维正向设计流程；[提示语库](references/prompt-library.md)完整保留用户确认的六条，再补参考转译、构图、材质、动效规格、响应式与验收。
+
+[中英文词表](references/aesthetic-reference.md)可直接用于选择风格与描述动作。原文、忠实翻译、摘要、编辑适配分别标明；中文来源不会反译为假英文原文。明确有MIT许可的[Anthropic前端审美提示](references/anthropic-prompts-en-zh.md)保留完整英文、中文翻译及许可证；其他未确认许可的长篇第三方提示保留原文入口、短摘录和中文摘要。
 
 ## 怎么用
 
@@ -80,6 +88,10 @@ git clone https://github.com/LearnPrompt/carl-ui-humanizer.git "$HOME/.claude/sk
 读取日期2026-10-28；参考仓库元数据版本3.1.0；修订 `8c307f367c91bd974002f10f2be2965d642c13df`。
 [对应SKILL.md](https://github.com/blader/humanizer/blob/8c307f367c91bd974002f10f2be2965d642c13df/SKILL.md)
 
-本包独立版本0.1.1。目录/frontmatter校验与离线行为演练的结果见 [验证记录](VALIDATION.md)；这不等同真实浏览器视觉、DeepSeek执行效果或线上部署验收。
+本包独立版本0.2.0。目录/frontmatter校验与离线行为演练的结果见 [验证记录](VALIDATION.md)；这不等同真实浏览器视觉、DeepSeek执行效果或线上部署验收。
 
-本版已补齐[英文原句与中文对照](references/english-originals-zh.md)，包括截图原句、线程补充及完整八维检查技术指令。
+## 0.2.0 来源补齐与覆盖范围
+
+2026-11-05重查当前清单、收件箱及已完成历史，并重新核读可取得的正文、原图、视频采样和原始提示文件。具体状态见[来源覆盖与缺口](references/source-coverage.md)。已获取的收藏清单、已读原文/图片和实测效果分别记录；**不声称所有原帖和媒体均已读全**。
+
+原有[英文原句与中文对照](references/english-originals-zh.md)保留，包括截图原句、线程补充与八维技术指令；新增来源见[扩展核读](references/expanded-sources.md)。未取得的原文不由模型猜补。
