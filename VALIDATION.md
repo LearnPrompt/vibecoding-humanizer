@@ -43,7 +43,15 @@
 - 环境：macOS，Node v25.6.0，Skills CLI `skills@1.7.6`，`DISABLE_TELEMETRY=1`，临时 HOME 与临时项目目录。
 - `npx skills add <本地仓库> -l` 识别到 1 个 Skill：vibecoding-humanizer。
 - `npx skills add <本地仓库> --skill vibecoding-humanizer -a claude-code -y --copy` 安装到 `./.claude/skills/vibecoding-humanizer`，SKILL.md、5 个 mode/代码动画参考、其余 references、agents、examples 全部到位，与仓库逐文件一致。
-- 远端命令 `npx skills add LearnPrompt/vibecoding-humanizer` 需在 GitHub 改名并推送后另测，结果见下一节。
+- 远端命令见下一节「远端安装实测」。
+
+### 远端安装实测（已做，2026-11-05，main = `b1f9dc1`）
+
+- 同上环境，空 HOME、空项目目录。
+- `npx skills add LearnPrompt/vibecoding-humanizer -l`：从 `https://github.com/LearnPrompt/vibecoding-humanizer.git` 克隆，识别到 1 个 Skill：vibecoding-humanizer。
+- `npx skills add LearnPrompt/vibecoding-humanizer --skill vibecoding-humanizer -a claude-code -y`：安装到 `./.claude/skills/vibecoding-humanizer`，34 个文件，与仓库 `diff -rq -x .git` 一致。
+- 旧地址 `github.com/LearnPrompt/carl-ui-humanizer` 返回 301 跳转到新地址，旧 clone 地址仍可用。
+- 不带参数的交互式 `npx skills add LearnPrompt/vibecoding-humanizer` 只验证了能找到 Skill，交互选择 Agent 那一步未自动化测试。
 
 ### 规则选择（真实 Agent 观察，非静态推演）
 
