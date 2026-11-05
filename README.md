@@ -1,97 +1,125 @@
-# Carl UI Humanizer
+# vibecoding-humanizer
 
-面向两类任务：减少界面模板感，以及通过字体、构图、配色、材质、动效与参考转译提升审美。不是把所有页面改成极简，也不把加特效等同于好设计。
+给 vibe coding 产物去 AI 味的一个 Skill：**3D 场景、SVG、HTML 动态海报与代码动画、UI 界面**，按类型加载不同规则，也支持混合场景。
 
-结构参照 [blader/humanizer](https://github.com/blader/humanizer)：工作方式、按类编号的识别条目、修改前后示例、保留条件和输出模式。UI内容重新整理自本次材料；不是原仓库的中文翻译，也不使用它的验证数据。
+A skill that removes the "AI look" from vibe-coded output — **3D scenes, SVG, HTML posters & code animations, and UI** — loading a different rule set per mode, with mixed-mode support.
 
-## 一个例子
+```bash
+npx skills add LearnPrompt/vibecoding-humanizer
+```
 
-**修改前**：页面名是素材库，副标题再解释这里可以管理素材。上传按钮旁又写点击上传。四个相关统计各用强阴影卡，卡片内继续套彩边框。
+> 前身是 carl-ui-humanizer，0.3.0 起改名并扩展到四类产物，见[迁移说明](#从-carl-ui-humanizer-迁移--migrating)。Formerly `carl-ui-humanizer`; renamed and expanded in 0.3.0.
 
-**修改后**：保留素材库、上传素材与真实格式／容量限制；相关统计合在一个分区。用对齐和间距表达关系，必要的表单标签、帮助、错误与状态继续可见。
+## 安装 / Install
 
-这是规则说明示例，不是已在DeepSeek/Codex上完成的对照实测。
+用现成的 [Skills CLI](https://github.com/vercel-labs/skills)（`npx skills`），本仓库没有自己的 npm 包。Uses the existing Skills CLI; this repo ships no npm package of its own.
 
-## 包含什么
+```bash
+# 交互式选择 Agent（默认装到当前项目）/ interactive, project-level
+npx skills add LearnPrompt/vibecoding-humanizer
+
+# 只装给 Claude Code，跳过确认 / Claude Code only, non-interactive
+npx skills add LearnPrompt/vibecoding-humanizer --skill vibecoding-humanizer -a claude-code -y
+
+# 装到用户级（所有项目可用）/ user-level
+npx skills add LearnPrompt/vibecoding-humanizer --skill vibecoding-humanizer -a claude-code -g -y
+```
+
+想关掉 Skills CLI 的匿名统计，在命令前加 `DISABLE_TELEMETRY=1`。To opt out of the CLI's telemetry, prefix with `DISABLE_TELEMETRY=1`.
+
+不用 npx 也可以 Git 克隆到宿主的 Skill 目录（目标目录必须不存在）/ Or clone manually:
+
+```bash
+git clone https://github.com/LearnPrompt/vibecoding-humanizer.git ~/.claude/skills/vibecoding-humanizer
+# Codex: "${CODEX_HOME:-$HOME/.codex}/skills/vibecoding-humanizer"
+```
+
+装好后重开会话，宿主才会发现新 Skill。Restart the agent session after installing.
+
+## 怎么用 / Usage
+
+在提示语里写 `类型：3d / svg / html / ui`，或直接用自然语言。这是提示语约定，不是命令行参数。Name the mode in your prompt (`mode: 3d / svg / html / ui`) or just describe the task.
+
+| 模式 | 复制即用 / Copy-paste prompt |
+|---|---|
+| **3d** | 用 vibecoding-humanizer 按 3d 模式检查这个 Three.js 场景，优先修正悬浮、接触关系和光影，保留低多边形风格。 |
+| **svg** | 用 vibecoding-humanizer 按 svg 模式清理这组图标：统一 viewBox 和描边，合并重叠路径，单色图标改 currentColor，在 24px 下检查可读性。 |
+| **html** | 用 vibecoding-humanizer 按 html 模式改这支代码动画：去掉没信息量的英文小字，拉开字号字重对比，转场别每幕都一样，改完实际播放检查。 |
+| **ui** | 用 vibecoding-humanizer 按 ui 模式检查这个落地页，先定 hero 风格，不堆功能区，保留必要的表单标签和价格。 |
+| **混合 / mixed** | 类型：html，内嵌 svg；整理这张动态海报的文本层、SVG 路径和动画节奏，保留品牌与内容。 |
+| **混合 / mixed** | 类型：ui，HTML 实现；先检查表单状态与阅读顺序，动效只保留与操作反馈有关的。 |
+
+English: *"Use vibecoding-humanizer in 3d mode: fix floating objects, contact and lighting first; keep the low-poly style."*
+
+**规则怎么分 / How modes split**
+
+- **3d**：几何与拓扑、落地与穿插、材质、明确光源与阴影、相机、多视角；先结构后材质灯光。PBR 贴图不烘焙阴影高光 ≠ 场景禁用光影；low-poly 可以是主动风格。
+- **svg**：viewBox、节点与重叠形状、图标系统、小尺寸可读性。小数精度 ≠ 节点数；多色插画不一律 currentColor。
+- **html**：代码动画与动态海报的分层、可编辑文本、时间线与节奏。CSS 不是性能魔法；不把 UI 减动效规则套到叙事作品。
+- **ui**：信息层级、排版、颜色角色、交互、响应式、可访问性；沿用 0.2.0 的八维流程和 13 条诊断。去 AI 味 ≠ 永远禁紫色/圆角/渐变。
+
+`html` 是实现载体，`ui` 是设计目标，可以叠加。详见 [SKILL.md](SKILL.md)。
+
+## 前后效果 / Before & After
+
+用商汤 SenseNova-6.8-Flash 实测的真实截帧，只裁切压缩、未重绘。完整说明、来源时间点和局限见 [examples/](examples/README.md)。Real frames, cropped and compressed only.
+
+**代码动画 / Code animation**（html；首版 15s vs 装 Skill 后 35s，长度不同，非严格对照）
+
+| 首版 | 装 Skill 后 |
+|---|---|
+| ![](examples/assets/code-anim-principles-before.jpg) | ![](examples/assets/code-anim-principles-after.jpg) |
+
+**UI**（**跨模型对照**：DeepSeek 首版 vs SenseNova + Skill，模型不同，差异不能全归因于 Skill / cross-model, not a controlled test）
+
+| DeepSeek | SenseNova-6.8-Flash + Skill |
+|---|---|
+| ![](examples/assets/ui-deepseek-first.jpg) | ![](examples/assets/ui-sensenova-skill-hero.jpg) |
+
+**3D**（3d；首版仅 Three.js → 素模 → 优化版）
+
+| 首版 | 素模 | 优化版 |
+|---|---|---|
+| ![](examples/assets/3d-first-threejs.jpg) | ![](examples/assets/3d-clay-geometry.jpg) | ![](examples/assets/3d-optimized.jpg) |
+
+**SVG / 动态海报**：只有成果、没有前版，所以不做对比。Results only, no "before" exists, so none is shown. 鹈鹕骑单车见 [examples/](examples/README.md)。
+
+## 包含什么 / What's inside
 
 ```text
-carl-ui-humanizer/
-├── SKILL.md                     # 两种入口、八维设计流程与13条诊断
-├── README.md
-├── VALIDATION.md
-├── agents/openai.yaml
+vibecoding-humanizer/
+├── SKILL.md                  # 路由：选模式、混合规则、共用规则
 ├── references/
-│   ├── prompt-library.md        # 14条可直接使用的编辑提示语
-│   ├── aesthetic-reference.md   # 风格/动效原词与中文、参考选择
-│   ├── english-originals-zh.md  # 原有英文原句与中文对应
-│   ├── anthropic-prompts-en-zh.md # MIT官方前端审美完整英中提示
-│   ├── expanded-sources.md      # 新增原句、原文入口与中文摘要
-│   ├── source-coverage.md       # 来源核读范围及未完成部分
-│   ├── original-materials.md    # 原始来源与编辑边界
-│   └── code-animation.md
+│   ├── mode-3d.md            # 3d 规则
+│   ├── mode-svg.md           # svg 规则
+│   ├── mode-html.md          # html：动态海报 + 代码动画
+│   ├── code-animation.md     # 代码动画细则（html 模式引用）
+│   ├── mode-ui.md            # ui：八维流程 + 13 条诊断
+│   ├── prompt-library.md     # 14 条 UI 提示语
+│   └── aesthetic-reference.md 等来源与对照材料
+├── examples/                 # 前后效果与来源索引
+├── agents/openai.yaml
+├── VALIDATION.md
 └── assets/source-luinlee.png
 ```
 
-主入口先区分“去味”和“审美提升”。保留13条诊断，新增八维正向设计流程；[提示语库](references/prompt-library.md)完整保留用户确认的六条，再补参考转译、构图、材质、动效规格、响应式与验收。
+每次只按模式读取需要的文件，不会把四套规则一起塞进上下文。Only the files for the chosen mode are read.
 
-[中英文词表](references/aesthetic-reference.md)可直接用于选择风格与描述动作。原文、忠实翻译、摘要、编辑适配分别标明；中文来源不会反译为假英文原文。明确有MIT许可的[Anthropic前端审美提示](references/anthropic-prompts-en-zh.md)保留完整英文、中文翻译及许可证；其他未确认许可的长篇第三方提示保留原文入口、短摘录和中文摘要。
+## 从 carl-ui-humanizer 迁移 / Migrating
 
-## 怎么用
+- 仓库由 `LearnPrompt/carl-ui-humanizer` 改名为 `LearnPrompt/vibecoding-humanizer`，提交历史保留，GitHub 会把旧地址跳转到新地址。
+- Skill 名从 `carl-ui-humanizer` 改为 `vibecoding-humanizer`。装过旧版的，先删旧目录（或 `npx skills remove carl-ui-humanizer`），再按上面的命令装新版。
+- 原 13 条 UI 规则和八维流程没有删改，移到了 `references/mode-ui.md`。
 
-把完整文件夹交给支持Skills的Agent，或直接让Agent读取其中的SKILL.md。安装到宿主的Skill目录后可用 `$carl-ui-humanizer`；不同宿主是否能自动发现，需在该宿主确认。本仓库是独立 Skill 包，不包含插件市场注册或跨端同步。
+## 边界 / Limits
 
-### 给其他 Agent 的安装指令
+- 规则来自作者实测和原帖整理，是经验规则，不是对所有模型的普遍结论；示例评价是作者主观观感。
+- 不把所有卡片、渐变、英文小标题、阴影、low-poly 当错误；用户明确的风格优先。
+- 不包含检测服务、自动评分、联网 SDK 或自有 CLI。验证范围见 [VALIDATION.md](VALIDATION.md)。
 
-复制下面这段给 Agent：
+## 致谢 / Credits
 
-> 从 https://github.com/LearnPrompt/carl-ui-humanizer 安装 carl-ui-humanizer。先确认你当前宿主的 Skill 目录，将完整仓库放进该目录的 carl-ui-humanizer 子目录，保留 references、assets 和 agents。若同名目录已经存在，先检查，不要覆盖已有修改。安装后读取 SKILL.md，确认名称与版本，并报告宿主是否已识别；必要时提示我重开会话。
-
-### Git 安装
-
-目标目录必须不存在；以下命令不会自动覆盖已有安装。
-
-```bash
-# Codex：默认用户级目录；自定义 CODEX_HOME 时沿用该配置
-mkdir -p "${CODEX_HOME:-$HOME/.codex}/skills"
-git clone https://github.com/LearnPrompt/carl-ui-humanizer.git "${CODEX_HOME:-$HOME/.codex}/skills/carl-ui-humanizer"
-
-# Claude Code：用户级目录（二选一，按宿主安装）
-mkdir -p "$HOME/.claude/skills"
-git clone https://github.com/LearnPrompt/carl-ui-humanizer.git "$HOME/.claude/skills/carl-ui-humanizer"
-```
-
-其他宿主请使用其实际 Skill 目录。也可下载仓库 ZIP，解压后将完整目录命名为 `carl-ui-humanizer`。不支持自动发现的 Agent 可以直接读取 `SKILL.md` 使用。主规则为中文，引用材料包含英文原文与中文对照，并非两套独立语言版 Skill。
-
-示例请求：
-
-> 使用这个包的SKILL.md检查素材管理页面，优先修影响理解和操作的问题；保留品牌、业务数据、必要帮助与现有功能，改完告诉我实际验证了什么。
-
-也可以只给截图要求审查，或要求输出能复制给模型的修改指令。仅给截图时，不宣称按钮、接口或窄屏已经验证。
-
-## 材料怎样重新提取
-
-- 用户截图里的英文指令、线程中的英文补充与忠实中文翻译单独保留。
-- 英文八维检查键逐项对应中文，循环与获奖目标另作解释。
-- ZaynHao十条及Invo补充原来就是中文，按中文原帖提取。
-- 网站清单、艺术风格和视频库是参考材料，后来八条文章指令是编辑适配，不混称英文翻译。
-
-完整材料见 [原始素材与翻译边界](references/original-materials.md)。截图是用户提供的来源材料，不是改后UI效果图。
-
-## 边界
-
-不把所有卡片、渐变和英文小标题当错误；不强制0.5px边框、12px小字、全站Radix或所有动效250ms；不把UI规则直接套成动画叙事规则。没有明确问题时可以保留原设计。
-
-本包直接支撑现有UI去AI味图文及后续页面改稿，采用现有素材与离线文档，不增加检测服务、自动评分、联网SDK或长期自动化。
-
-## 结构参考快照
-
-读取日期2026-10-28；参考仓库元数据版本3.1.0；修订 `8c307f367c91bd974002f10f2be2965d642c13df`。
-[对应SKILL.md](https://github.com/blader/humanizer/blob/8c307f367c91bd974002f10f2be2965d642c13df/SKILL.md)
-
-本包独立版本0.2.0。目录/frontmatter校验与离线行为演练的结果见 [验证记录](VALIDATION.md)；这不等同真实浏览器视觉、DeepSeek执行效果或线上部署验收。
-
-## 0.2.0 来源补齐与覆盖范围
-
-2026-11-05重查当前清单、收件箱及已完成历史，并重新核读可取得的正文、原图、视频采样和原始提示文件。具体状态见[来源覆盖与缺口](references/source-coverage.md)。已获取的收藏清单、已读原文/图片和实测效果分别记录；**不声称所有原帖和媒体均已读全**。
-
-原有[英文原句与中文对照](references/english-originals-zh.md)保留，包括截图原句、线程补充与八维技术指令；新增来源见[扩展核读](references/expanded-sources.md)。未取得的原文不由模型猜补。
+- 条目结构参照 [blader/humanizer](https://github.com/blader/humanizer)（快照修订 `8c307f3`，读取于 2026-10-28）。
+- 去冗余核心原则来自 Zihua（@luinlee）：*Avoid unnecessary secondary labels and descriptions. Let the layout do the explaining.*
+- UI 来源、中英原句与翻译边界见 [原始素材](references/original-materials.md) 与 [来源覆盖](references/source-coverage.md)；Anthropic 前端审美提示按 MIT 许可完整保留。
+- 安装依赖 [vercel-labs/skills](https://github.com/vercel-labs/skills)。可选的生成后审计：[Hallmark](https://github.com/Nutlope/hallmark)、[Impeccable](https://github.com/pbakaus/impeccable)、[Taste Skill](https://github.com/Leonxlnx/taste-skill)。

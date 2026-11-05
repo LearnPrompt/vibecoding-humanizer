@@ -1,4 +1,4 @@
 interface:
-  display_name: "UI 去 AI 味"
-  short_description: "结合原帖提示语与风格参考，改善界面模板感、排版配色与动效，保留业务和可用性"
-  default_prompt: "使用 $carl-ui-humanizer 检查这个页面，结合参考改善模板感与视觉风格，并验证核心交互。"
+  display_name: "vibecoding-humanizer"
+  short_description: "按 3d / svg / html / ui 四种模式给 vibe coding 产物去 AI 味，支持混合场景，保留风格、业务和可用性"
+  default_prompt: "使用 $vibecoding-humanizer 检查这个产物，先判断是 3d、svg、html 还是 ui（可混合），只按对应规则改，并在真实输出里验证。"
