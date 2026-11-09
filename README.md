@@ -1,3 +1,5 @@
+<p align="center"><img src="assets/readme/hero.jpg" alt="vibecoding-humanizer：给 vibe coding 产物去 AI 味，3d / svg / html / ui 四种模式 / Remove the AI look from vibe-coded output" width="100%"></p>
+
 # vibecoding-humanizer
 
 给 vibe coding 产物去 AI 味的一个 Skill：**3D 场景、SVG、HTML 动态海报与代码动画、UI 界面**，按类型加载不同规则，也支持混合场景。
@@ -7,6 +9,12 @@ A skill that removes the "AI look" from vibe-coded output — **3D scenes, SVG, 
 ```bash
 npx skills add LearnPrompt/vibecoding-humanizer
 ```
+
+<p align="center"><img src="assets/readme/promo.webp" alt="30 秒宣传片：代码动画、UI、3D 的真实前后对照，SVG 与动态海报成果，最后是安装命令 / 30-second promo with real before-and-after frames" width="100%"></p>
+
+<p align="center"><a href="assets/readme/promo-1080p.mp4">▶ 完整宣传片 30 秒 1080p，带配乐 / Full promo video (MP4)</a></p>
+
+<p align="center"><img src="assets/readme/modes.jpg" alt="一个 Skill，四种模式：3d 几何与光影、svg 路径与图标、html 代码动画与动态海报、ui 信息层级与交互 / One skill, four modes" width="100%"></p>
 
 > 前身是 carl-ui-humanizer，0.3.0 起改名并扩展到四类产物，见[迁移说明](#从-carl-ui-humanizer-迁移--migrating)。Formerly `carl-ui-humanizer`; renamed and expanded in 0.3.0.
 
@@ -66,21 +74,15 @@ English: *"Use vibecoding-humanizer in 3d mode: fix floating objects, contact an
 
 **代码动画 / Code animation**（html；首版 15s vs 装 Skill 后 35s，长度不同，非严格对照）
 
-| 首版 | 装 Skill 后 |
-|---|---|
-| ![](examples/assets/code-anim-principles-before.jpg) | ![](examples/assets/code-anim-principles-after.jpg) |
+![代码动画：首版 vs 装 Skill 后 / Code animation before and after](assets/readme/ba-html.jpg)
 
 **UI**（**跨模型对照**：DeepSeek 首版 vs SenseNova + Skill，模型不同，差异不能全归因于 Skill / cross-model, not a controlled test）
 
-| DeepSeek | SenseNova-6.8-Flash + Skill |
-|---|---|
-| ![](examples/assets/ui-deepseek-first.jpg) | ![](examples/assets/ui-sensenova-skill-hero.jpg) |
+![UI：DeepSeek 首版 vs SenseNova-6.8-Flash + Skill / UI cross-model comparison](assets/readme/ba-ui.jpg)
 
 **3D**（3d；首版仅 Three.js → 素模 → 优化版）
 
-| 首版 | 素模 | 优化版 |
-|---|---|---|
-| ![](examples/assets/3d-first-threejs.jpg) | ![](examples/assets/3d-clay-geometry.jpg) | ![](examples/assets/3d-optimized.jpg) |
+![3D：首版、素模、优化版 / 3D first pass, clay, optimized](assets/readme/ba-3d.jpg)
 
 **SVG / 动态海报**：只有成果、没有前版，所以不做对比。Results only, no "before" exists, so none is shown. 鹈鹕骑单车见 [examples/](examples/README.md)。
 
@@ -100,7 +102,9 @@ vibecoding-humanizer/
 ├── examples/                 # 前后效果与来源索引
 ├── agents/openai.yaml
 ├── VALIDATION.md
-└── assets/source-luinlee.png
+└── assets/
+    ├── readme/               # 宣传片与 README 宣传图
+    └── source-luinlee.png
 ```
 
 每次只按模式读取需要的文件，不会把四套规则一起塞进上下文。Only the files for the chosen mode are read.
