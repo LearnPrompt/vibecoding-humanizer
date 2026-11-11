@@ -127,3 +127,9 @@ vibecoding-humanizer/
 - 去冗余核心原则来自 Zihua（@luinlee）：*Avoid unnecessary secondary labels and descriptions. Let the layout do the explaining.*
 - UI 来源、中英原句与翻译边界见 [原始素材](references/original-materials.md) 与 [来源覆盖](references/source-coverage.md)；Anthropic 前端审美提示按 MIT 许可完整保留。
 - 安装依赖 [vercel-labs/skills](https://github.com/vercel-labs/skills)。可选的生成后审计：[Hallmark](https://github.com/Nutlope/hallmark)、[Impeccable](https://github.com/pbakaus/impeccable)、[Taste Skill](https://github.com/Leonxlnx/taste-skill)。
+
+## 许可 / License
+
+本仓库自己写的规则、文档和示例按 [MIT](LICENSE) 许可。引用的第三方内容保留各自的条款：Anthropic 前端审美提示按其 MIT 许可转载，协议全文在 [references/anthropic-prompts-en-zh.md](references/anthropic-prompts-en-zh.md) 末尾；其余引用的原帖句子归原作者所有，出处见[原始素材](references/original-materials.md)。
+
+Rules, docs and examples written for this repo are released under the [MIT License](LICENSE). Quoted third-party material keeps its own terms: the Anthropic frontend aesthetics prompts are reproduced under their MIT license (full text at the end of `references/anthropic-prompts-en-zh.md`); other quoted sentences belong to their original authors, with sources listed in `references/original-materials.md`.
